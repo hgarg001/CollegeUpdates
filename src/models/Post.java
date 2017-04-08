@@ -4,88 +4,86 @@ import java.time.LocalDateTime;
 
 public class Post {
 
-	private Long post_id;
-	private String post_owner_id;
-	private LocalDateTime post_date_time;
-	private String post_text;
-	private Byte[] post_image1;
-	private Byte[] post_image2;
-	private Byte[] post_image3;
-	private Byte[] post_image4;
-	
+	private Long postId;
+	private String postOwnerId;
+	private LocalDateTime postDateTime;
+	private String postText;
+	private Byte[] postImage1;
+	private Byte[] postImage2;
+	private Byte[] postImage3;
+	private Byte[] postImage4;
+	private Long noOfLikes;
 
-	public Byte[] getPost_image1() {
-		return post_image1;
+	public Long getPostId() {
+		return postId;
 	}
 
-	public void setPost_image1(Byte[] post_image1) {
-		this.post_image1 = post_image1;
+	public void setPostId(Long postId) {
+		this.postId = postId;
 	}
 
-	public Byte[] getPost_image2() {
-		return post_image2;
+	public String getPostOwnerId() {
+		return postOwnerId;
 	}
 
-	public void setPost_image2(Byte[] post_image2) {
-		this.post_image2 = post_image2;
+	public void setPostOwnerId(String postOwnerId) {
+		this.postOwnerId = postOwnerId;
 	}
 
-	public Byte[] getPost_image3() {
-		return post_image3;
+	public LocalDateTime getPostDateTime() {
+		return postDateTime;
 	}
 
-	public void setPost_image3(Byte[] post_image3) {
-		this.post_image3 = post_image3;
+	public void setPostDateTime(LocalDateTime postDateTime) {
+		this.postDateTime = postDateTime;
 	}
 
-	public Byte[] getPost_image4() {
-		return post_image4;
+	public String getPostText() {
+		return postText;
 	}
 
-	public void setPost_image4(Byte[] post_image4) {
-		this.post_image4 = post_image4;
+	public void setPostText(String postText) {
+		this.postText = postText;
 	}
 
-	private Integer no_of_likes;
-
-	public Long getPost_id() {
-		return post_id;
+	public Byte[] getPostImage1() {
+		return postImage1;
 	}
 
-	public void setPost_id(Long post_id) {
-		this.post_id = post_id;
+	public void setPostImage1(Byte[] postImage1) {
+		this.postImage1 = postImage1;
 	}
 
-	public String getPost_owner_id() {
-		return post_owner_id;
+	public Byte[] getPostImage2() {
+		return postImage2;
 	}
 
-	public void setPost_owner_id(String post_owner_id) {
-		this.post_owner_id = post_owner_id;
+	public void setPostImage2(Byte[] postImage2) {
+		this.postImage2 = postImage2;
 	}
 
-	public LocalDateTime getPost_date_time() {
-		return post_date_time;
+	public Byte[] getPostImage3() {
+		return postImage3;
 	}
 
-	public void setPost_date_time(LocalDateTime post_date_time) {
-		this.post_date_time = post_date_time;
+	public void setPostImage3(Byte[] postImage3) {
+		this.postImage3 = postImage3;
 	}
 
-	public String getPost_text() {
-		return post_text;
+	public Byte[] getPostImage4() {
+		return postImage4;
 	}
 
-	public void setPost_text(String post_text) {
-		this.post_text = post_text;
+	public void setPostImage4(Byte[] postImage4) {
+		this.postImage4 = postImage4;
 	}
 
-	public Integer getNo_of_likes() {
-		return no_of_likes;
+	public Long getNoOfLikes() {
+		return noOfLikes;
 	}
 
-	public void setNo_of_likes(Integer no_of_likes) {
-		this.no_of_likes = no_of_likes;
+	public void setNoOfLikes(Long noOfLikes) {
+		this.noOfLikes = noOfLikes;
 	}
 
 }

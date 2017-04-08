@@ -1,4 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@page import="servlet.PostServlet"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="service.PostService"%>
+<%@page import="models.Post"%>
+<%@page import="java.util.ArrayList"%>
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -31,32 +38,56 @@
 				</table>
 			</form>
 		</div>
+		<br> <br>
 		<div>
 			<%
-				for (int i = 0; i < 5; i++) {
+				List<Post> allPosts = new ArrayList<Post>();
+
+				allPosts = new PostService().getAllPost();
+
+				Iterator<Post> itr = allPosts.iterator();
+
+				int count = 0;
+				int noOfPostToShow = PostServlet.postCount * 5;
+				while (itr.hasNext() && count < noOfPostToShow) {
+					Post post = itr.next();
 			%>
 			<table border="1" style="width: 388pt;">
 				<tr>
 					<td rowspan="2" style="height: 45px; width: 50px;">pic</td>
-					<td>hello</td>
+					<td><%=post.getPostOwnerId()%></td>
 				</tr>
 				<tr>
-					<td>hello</td>
+					<td><%=post.getPostDateTime()%></td>
 				</tr>
 				<tr>
-					<td colspan="2">Hello</td>
+					<td colspan="2"><%=post.getPostText()%></td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<form action="../PostServlet" method="post">
-							<input name="submit" type="submit" value="Like">
+						<%
+							String path = "../PostServlet?postId=" + post.getPostId() + "";
+						%>
+						<form action=<%=path%> method="post">
+							<span><input name="submit" type="submit" value="Like">
+								<%=post.getNoOfLikes()%></span>
 						</form>
 					</td>
 				</tr>
 			</table>
+			<br>
+			<%
+				count++;
+				}
+				if (count < allPosts.size()) {
+			%>
+			<form action="../PostServlet" method="post">
+				<span><input name="submit" type="submit" value="More Stroies"></span>
+			</form>
 			<%
 				}
 			%>
+			<br>
 		</div>
 	</div>
 </body>
