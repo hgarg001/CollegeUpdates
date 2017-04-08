@@ -1,0 +1,5 @@
+projectKey=CollegeUpdates
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/CollegeUpdates
+ceTaskId=AVtE1dyv_8Id0ZFS3ZG6
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVtE1dyv_8Id0ZFS3ZG6
