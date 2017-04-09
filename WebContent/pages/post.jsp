@@ -1,3 +1,4 @@
+<%@page import="java.util.Collection"%>
 <%@page import="servlet.PostServlet"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
@@ -41,10 +42,11 @@
 		<br> <br>
 		<div>
 			<%
+				final String userId = "DFGDFG";
 				List<Post> allPosts = new ArrayList<Post>();
-
+				List<Long> likedPostIds = new ArrayList<Long>();
 				allPosts = new PostService().getAllPost();
-
+				likedPostIds = new PostService().likedPost(userId);
 				Iterator<Post> itr = allPosts.iterator();
 
 				int count = 0;
@@ -58,7 +60,7 @@
 					<td><%=post.getPostOwnerId()%></td>
 				</tr>
 				<tr>
-					<td><%=post.getPostDateTime()%></td>
+					<td><%=post.getPostDateTime().toLocalTime()%><span> </span><%=post.getPostDateTime().toLocalDate()%></td>
 				</tr>
 				<tr>
 					<td colspan="2"><%=post.getPostText()%></td>
@@ -69,8 +71,20 @@
 							String path = "../PostServlet?postId=" + post.getPostId() + "";
 						%>
 						<form action=<%=path%> method="post">
+
+							<%
+								if (!likedPostIds.contains(post.getPostId())) {
+							%>
 							<span><input name="submit" type="submit" value="Like">
-								<%=post.getNoOfLikes()%></span>
+								<%
+									} else if (likedPostIds.contains(post.getPostId())) {
+								%> <input name="submit" type="submit" value="Unlike"> <%
+ 	}
+ 		String noOfLike = "";
+ 		if (post.getNoOfLikes() > 0) {
+ 			noOfLike += post.getNoOfLikes();
+ 		}
+ %> <%=noOfLike%></span>
 						</form>
 					</td>
 				</tr>

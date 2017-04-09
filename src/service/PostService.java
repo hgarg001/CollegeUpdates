@@ -1,6 +1,7 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import models.Post;
 import database.PostDatabase;
@@ -28,15 +29,45 @@ public class PostService {
 		return allPosts;
 	}
 
-	public boolean likePost(Post post) {
+	public boolean likePost(Post post,String userId) {
 		try {
-			return new PostDatabase().likePost(post);
+			return new PostDatabase().likePost(post,userId);
 		} catch (Exception exception) {
 			exception.printStackTrace();
 
 		}
 		return false;
 
+	}
+
+	public boolean unLikePost(Post post,String userId) {
+
+		try {
+
+			return new PostDatabase().unLikePost(post,userId);
+
+		} catch (Exception exception) {
+			// TODO: handle exception
+			exception.printStackTrace();
+
+		}
+
+		return false;
+
+	}
+
+	public List<Long> likedPost(String userId) {
+		List<Long> likedPostIds = new ArrayList<Long>();
+		try {
+
+			likedPostIds = new PostDatabase().likedPost(userId);
+
+		} catch (Exception exception) {
+			// TODO: handle exception
+			exception.printStackTrace();
+		}
+
+		return likedPostIds;
 	}
 
 }

@@ -8,10 +8,10 @@ public class Post {
 	private String postOwnerId;
 	private LocalDateTime postDateTime;
 	private String postText;
-	private Byte[] postImage1;
-	private Byte[] postImage2;
-	private Byte[] postImage3;
-	private Byte[] postImage4;
+	private byte[] postImage1;
+	private byte[] postImage2;
+	private byte[] postImage3;
+	private byte[] postImage4;
 	private Long noOfLikes;
 
 	public Long getPostId() {
@@ -46,35 +46,35 @@ public class Post {
 		this.postText = postText;
 	}
 
-	public Byte[] getPostImage1() {
+	public byte[] getPostImage1() {
 		return postImage1;
 	}
 
-	public void setPostImage1(Byte[] postImage1) {
+	public void setPostImage1(byte[] postImage1) {
 		this.postImage1 = postImage1;
 	}
 
-	public Byte[] getPostImage2() {
+	public byte[] getPostImage2() {
 		return postImage2;
 	}
 
-	public void setPostImage2(Byte[] postImage2) {
+	public void setPostImage2(byte[] postImage2) {
 		this.postImage2 = postImage2;
 	}
 
-	public Byte[] getPostImage3() {
+	public byte[] getPostImage3() {
 		return postImage3;
 	}
 
-	public void setPostImage3(Byte[] postImage3) {
+	public void setPostImage3(byte[] postImage3) {
 		this.postImage3 = postImage3;
 	}
 
-	public Byte[] getPostImage4() {
+	public byte[] getPostImage4() {
 		return postImage4;
 	}
 
-	public void setPostImage4(Byte[] postImage4) {
+	public void setPostImage4(byte[] postImage4) {
 		this.postImage4 = postImage4;
 	}
 

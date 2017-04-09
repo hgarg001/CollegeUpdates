@@ -15,7 +15,8 @@ import models.Post;
 public class PostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static Integer postCount = 1;
-	
+	public String userId = "DFGDFG";
+
 	public PostServlet() {
 		super();
 	}
@@ -32,7 +33,7 @@ public class PostServlet extends HttpServlet {
 
 			Post post = new Post();
 
-			post.setPostOwnerId("DFGDFG");
+			post.setPostOwnerId(userId);
 			post.setPostText(request.getParameter("postText"));
 
 			new PostService().createPost(post);
@@ -44,16 +45,18 @@ public class PostServlet extends HttpServlet {
 
 			post.setPostId(postId);
 
-			if (new PostService().likePost(post)) {
+			new PostService().likePost(post, userId);
 
-			} else {
+		} else if (request.getParameter("submit").equalsIgnoreCase("unlike")) {
+			Post post = new Post();
+			Long postId = Long.parseLong(request.getParameter("postId"));
 
-			}
+			post.setPostId(postId);
 
+			new PostService().unLikePost(post, userId);
 		} else if (request.getParameter("submit").equalsIgnoreCase(
 				"More Stroies")) {
 			PostServlet.postCount++;
-
 		}
 
 		response.sendRedirect("pages/post.jsp");
