@@ -9,12 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.UserService;
 import models.User;
+import service.UserService;
+import resources.Constants;
 
 @WebServlet("/UserServlet")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private User user = new User();
+	private UserService userService = new UserService();
+	public String message = "";
 
 	public UserServlet() {
 		super();
@@ -28,28 +32,50 @@ public class UserServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 
-		User user = new User();
-		user.setUserID(request.getParameter("userId"));
-		user.setUserName(request.getParameter("userName"));
-		user.setPassword(request.getParameter("password"));
-		user.setGender(request.getParameter("gender"));
+		String command = request.getParameter("submit");
 
-		LocalDate date = LocalDate.parse(request.getParameter("dateOfBirth"));
-		user.setDateOfBirth(date);
+		if (command.equalsIgnoreCase("register")) {
+			user = new User();
+			user.setUserID(request.getParameter("userId"));
+			user.setUserName(request.getParameter("userName"));
+			user.setPassword(request.getParameter("password"));
+			user.setGender(request.getParameter("gender"));
 
-		user.setBranch(request.getParameter("branch"));
-		user.setDepartment(request.getParameter("department"));
-		user.setEmailId(request.getParameter("emailId"));
-		user.setMobileNumber(Long.parseLong(request
-				.getParameter("mobileNumber")));
-		user.setUserType("E");
+			LocalDate date = LocalDate.parse(request
+					.getParameter("dateOfBirth"));
+			user.setDateOfBirth(date);
 
-		try {
-			new UserService().addUser(user);
-		} catch (Exception e) {
-			e.printStackTrace();
+			user.setBranch(request.getParameter("branch"));
+			user.setDepartment(request.getParameter("department"));
+			user.setEmailId(request.getParameter("emailId"));
+			user.setMobileNumber(Long.parseLong(request
+					.getParameter("mobileNumber")));
+			user.setUserType("E");
+
+			try {
+				userService.addUser(user);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			response.sendRedirect("pages/login.jsp");
+		} else if (command.equalsIgnoreCase("login")) {
+			user = new User();
+			user.setUserID(request.getParameter("userId"));
+			user.setPassword(request.getParameter("password"));
+			try {
+				user = userService.login(user);
+				if (user == null) {
+					message = Constants.INVALID_LOGIN_DETAILS;
+					response.sendRedirect("pages/login.jsp");
+				} else {
+					message = "";
+					response.sendRedirect("pages/post.jsp");
+				}
+			} catch (Exception exception) {
+				exception.printStackTrace();
+			}
+
 		}
-		response.sendRedirect("index.html");
 	}
 
 }

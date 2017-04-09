@@ -28,8 +28,8 @@ public class PostServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-
-		if (request.getParameter("submit").equalsIgnoreCase("post")) {
+		String command = request.getParameter("submit");
+		if (command.equalsIgnoreCase("post")) {
 
 			Post post = new Post();
 
@@ -37,7 +37,7 @@ public class PostServlet extends HttpServlet {
 			post.setPostText(request.getParameter("postText"));
 
 			new PostService().createPost(post);
-		} else if (request.getParameter("submit").equalsIgnoreCase("like")) {
+		} else if (command.equalsIgnoreCase("like")) {
 
 			Post post = new Post();
 			System.out.println("ajkhdkdh" + request.getParameter("postId"));
@@ -47,15 +47,14 @@ public class PostServlet extends HttpServlet {
 
 			new PostService().likePost(post, userId);
 
-		} else if (request.getParameter("submit").equalsIgnoreCase("unlike")) {
+		} else if (command.equalsIgnoreCase("unlike")) {
 			Post post = new Post();
 			Long postId = Long.parseLong(request.getParameter("postId"));
 
 			post.setPostId(postId);
 
 			new PostService().unLikePost(post, userId);
-		} else if (request.getParameter("submit").equalsIgnoreCase(
-				"More Stroies")) {
+		} else if (command.equalsIgnoreCase("More Stroies")) {
 			PostServlet.postCount++;
 		}
 
