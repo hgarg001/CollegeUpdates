@@ -1,6 +1,8 @@
 package models;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
+
 
 public class Post {
 
@@ -85,5 +87,20 @@ public class Post {
 	public void setNoOfLikes(Long noOfLikes) {
 		this.noOfLikes = noOfLikes;
 	}
+	
+	public static Comparator<Post> postIdComparator = new Comparator<Post>() {
+
+		@Override
+		public int compare(Post p1, Post p2) {
+			// TODO Auto-generated method stub
+			
+			Long postId1 = p1.getPostId();
+			Long postId2 = p2.getPostId();
+			
+			
+			return postId2.compareTo(postId1);
+		}
+	};
+	
 
 }

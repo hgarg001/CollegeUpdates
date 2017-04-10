@@ -66,7 +66,7 @@ public class UserServlet extends HttpServlet {
 				user = userService.login(user);
 				if (user == null) {
 					message = Constants.INVALID_LOGIN_DETAILS;
-					response.sendRedirect("pages/login.jsp");
+					response.sendRedirect("pages/login.jsp?message="+message+"");
 				} else {
 					message = "";
 					response.sendRedirect("pages/post.jsp");

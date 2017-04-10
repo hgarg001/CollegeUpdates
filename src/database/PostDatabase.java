@@ -166,5 +166,83 @@ public class PostDatabase {
 
 		return likedPostIds;
 	}
+	
+	
+	public ArrayList<Post> getAllUserPost(String userId) throws Exception {
+		ArrayList<Post> allUserPosts = new ArrayList<Post>();
+
+		try {
+
+			Connection connection = Database.getConnection();
+			String selectQuery = "select * from user_post where post_owner_id='"+userId+"'";
+			Statement smt = connection.createStatement();
+
+			ResultSet result = smt.executeQuery(selectQuery);
+
+			while (result.next()) {
+				Post post = new Post();
+
+				post.setPostId(result.getLong(1));
+				post.setPostOwnerId(result.getString(2));
+
+				Timestamp timestamp = result.getTimestamp(3);
+				LocalDateTime localDateTime = timestamp.toLocalDateTime();
+				post.setPostDateTime(localDateTime);
+
+				post.setPostText(result.getString(4));
+
+				post.setPostImage1(result.getBytes(5));
+				post.setPostImage2(result.getBytes(6));
+				post.setPostImage3(result.getBytes(7));
+				post.setPostImage4(result.getBytes(8));
+
+				post.setNoOfLikes(result.getLong(9));
+
+				allUserPosts.add(post);
+
+			}
+
+		} catch (Exception exception) {
+		}
+		return allUserPosts;
+
+	}
+	
+	
+	public boolean deletePost(Post post) {
+		boolean returnValue = false;
+		try {
+
+			Connection connection = Database.getConnection();
+			int postId = post.getPostId().intValue();
+
+			Statement smt = connection.createStatement();
+
+			String updateQuery1 = "Delete from user_post where post_id="
+					+ postId + ";";
+			
+			String updateQuery2 = "Delete from user_liked_post where post_id="
+					+ postId + ";";
+
+			smt.executeUpdate(updateQuery2);
+				
+				if(smt.executeUpdate(updateQuery1)>0){
+					returnValue = true;
+
+				}
+				
+				returnValue = true;
+
+
+		} catch (Exception exception) {
+			exception.printStackTrace();
+
+		}
+
+		return returnValue;
+	}
+
+
+	
 
 }

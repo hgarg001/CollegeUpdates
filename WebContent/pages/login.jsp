@@ -24,8 +24,17 @@ and open the template in the editor.
 <body>
 	<div style="text-align: center;">
 		<h1>Login</h1>
-		<div style="margin-left: 37%;">
-			<p>${message}</p>
+		
+		
+		<% String message="";
+		
+		if(request.getQueryString()!=null){
+			message=request.getParameter("message");
+		}
+		
+		%>
+			<p><%=message %></p>
+			<div style="margin-left: 37%;">
 			<form action="../UserServlet" method="post">
 				<table border="0" style="text-align: left;">
 					<tr>

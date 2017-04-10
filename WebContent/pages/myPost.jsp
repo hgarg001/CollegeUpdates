@@ -63,38 +63,23 @@
 </div>
 
 	<div style="margin-left: 30%;">
-		<div>
-			<form action="../PostServlet" method="post">
-				<table border="0" style="text-align: left;">
-					<tr>
-						<td><textarea id="postData" cols="70" rows="7"
-								name="postText"></textarea></td>
-					</tr>
-					<tr>
-						<td><input name="submit" type="submit" value="Post"
-							onclick="return validatePost()"></td>
-					</tr>
-				</table>
-			</form>
-		</div>
-		<br> <br>
+
 		<div>
 			<%
-		
-				final String userId = "DFGDFG";
-					List<Post> allPosts = new ArrayList<Post>();
+					final String userId = "DFGDFG";
+					List<Post> allUserPosts = new ArrayList<Post>();
 					List<Long> likedPostIds = new ArrayList<Long>();
-					allPosts = new PostService().getAllPost();
+					allUserPosts = new PostService().getAllUserPost(userId);
 					
-					Collections.sort(allPosts, Post.postIdComparator);
+					Collections.sort(allUserPosts, Post.postIdComparator);
 					
 					likedPostIds = new PostService().likedPost(userId);
-					Iterator<Post> itr = allPosts.iterator();
+					Iterator<Post> itr = allUserPosts.iterator();
 
-				int count = 0;
-				int noOfPostToShow = PostServlet.postCount * 5;
-				while (itr.hasNext() && count < noOfPostToShow) {
-					Post post = itr.next();
+					int count = 0;
+					int noOfPostToShow = PostServlet.postCount * 5;
+					while (itr.hasNext() && count < noOfPostToShow) {
+						Post post = itr.next();
 			%>
 			<table border="1" style="width: 388pt;">
 				<tr>
@@ -108,7 +93,7 @@
 							   LocalTime postTime=post.getPostDateTime().toLocalTime();
 							   LocalDate todayDate=LocalDate.now();
 							   LocalTime todayTime=LocalTime.now();
-								
+							   String path = "../PostServlet?postId=" + post.getPostId() + "";
 							   
 							   String postTimeString="";
 							   String postDateString="";
@@ -126,7 +111,6 @@
 								  
 								   if(postTime.getHour()-todayTime.getHour()<0){
 									   
-									  //postTime=postlocalTime.truncatedTo(ChronoUnit.MINUTES).toString();	
 									    postTimeString=postTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)).toString();
 									    postDateString="Today";		   
 									   
@@ -135,14 +119,12 @@
 							   }else if(postDate.getYear()==todayDate.getYear()){
 								   DateTimeFormatter dfmt = DateTimeFormatter.ofPattern("dd MMM");
 
-								  // postTime=postlocalTime.truncatedTo(ChronoUnit.MINUTES).toString();
 								     postTimeString=postTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)).toString();
 								     postDateString=postDate.format(dfmt);
 								     
 							   }else {
 								   DateTimeFormatter dfmt = DateTimeFormatter.ofPattern("dd MMM yyyy");
 
-								   //postTime=postlocalTime.truncatedTo(ChronoUnit.MINUTES).toString();
 								   	 postTimeString=postTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)).toString();
 							   	   	 postDateString=postDate.format(dfmt);
 							   }
@@ -155,7 +137,7 @@
 				<tr>
 					<td colspan="2">
 						<%
-							String path = "../PostServlet?postId=" + post.getPostId() + "";
+							
 						%>
 						<form action=<%=path%> method="post">
 
@@ -167,11 +149,12 @@
 									} else if (likedPostIds.contains(post.getPostId())) {
 								%> <input name="submit" type="submit" value="Unlike"> <%
  	}
- 		String noOfLike = "";
- 		if (post.getNoOfLikes() > 0) {
- 			noOfLike += post.getNoOfLikes();
- 		}
- %> <%=noOfLike%></span>
+  		String noOfLike = "";
+  		if (post.getNoOfLikes() > 0) {
+  			noOfLike += post.getNoOfLikes();
+  		}
+ %> <%=noOfLike%> 			<input name="submit" type="submit" value="Delete">
+ </span>
 						</form>
 					</td>
 				</tr>
@@ -179,11 +162,12 @@
 			<br>
 			<%
 				count++;
-				}
-				if (count < allPosts.size()) {
+					}
+					if (count < allUserPosts.size()) {
 			%>
+			
 			<form action="../PostServlet" method="post">
-				<span><input name="submit" type="submit" value="More Stroies"></span>
+				<span><input name="submit" type="submit" value="See More"></span>
 			</form>
 			<%
 				}

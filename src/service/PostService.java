@@ -69,5 +69,36 @@ public class PostService {
 
 		return likedPostIds;
 	}
+	
+	
+	public ArrayList<Post> getAllUserPost(String userId) {
+		ArrayList<Post> allUserPosts = new ArrayList<Post>();
+		try {
+
+			allUserPosts = new PostDatabase().getAllUserPost(userId);
+
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+
+		return allUserPosts;
+	}
+	
+	public boolean deletePost(Post post) {
+
+		try {
+
+			return new PostDatabase().deletePost(post);
+
+		} catch (Exception exception) {
+			// TODO: handle exception
+			exception.printStackTrace();
+
+		}
+
+		return false;
+
+	}
+
 
 }

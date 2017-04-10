@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.PostService;
 import models.Post;
+import service.PostService;
 
 @WebServlet("/PostServlet")
 public class PostServlet extends HttpServlet {
@@ -28,6 +28,9 @@ public class PostServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
+		
+		String redirect="";
+		
 		String command = request.getParameter("submit");
 		if (command.equalsIgnoreCase("post")) {
 
@@ -37,6 +40,10 @@ public class PostServlet extends HttpServlet {
 			post.setPostText(request.getParameter("postText"));
 
 			new PostService().createPost(post);
+			
+			redirect="pages/post.jsp";
+
+			
 		} else if (command.equalsIgnoreCase("like")) {
 
 			Post post = new Post();
@@ -46,6 +53,8 @@ public class PostServlet extends HttpServlet {
 			post.setPostId(postId);
 
 			new PostService().likePost(post, userId);
+			
+			redirect="pages/post.jsp";
 
 		} else if (command.equalsIgnoreCase("unlike")) {
 			Post post = new Post();
@@ -54,11 +63,32 @@ public class PostServlet extends HttpServlet {
 			post.setPostId(postId);
 
 			new PostService().unLikePost(post, userId);
+			redirect="pages/post.jsp";
+			
 		} else if (command.equalsIgnoreCase("More Stroies")) {
 			PostServlet.postCount++;
+			redirect="pages/post.jsp";
+			
+		} else if (command.equalsIgnoreCase("delete")) {
+			Post post = new Post();
+			Long postId= Long.parseLong(request.getParameter("postId"));
+			
+			post.setPostId(postId);
+			
+			new PostService().deletePost(post);
+			
+			redirect="pages/myPost.jsp";		
+			
+		} else if (command.equalsIgnoreCase("See More")) {
+			PostServlet.postCount++;
+			redirect="pages/myPost.jsp";
+			
 		}
 
-		response.sendRedirect("pages/post.jsp");
+		  response.sendRedirect(redirect);
+		
+	
+		
 	}
 
 }
