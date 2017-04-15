@@ -54,25 +54,26 @@ public class UserServlet extends HttpServlet {
 
 			try {
 				userService.addUser(user);
-			} catch (Exception e) {
-				e.printStackTrace();
+				response.sendRedirect("pages/login.jsp");
+			} catch (Exception exception) {
+				message = exception.getMessage();
+				exception.printStackTrace();
+				response.sendRedirect("pages/registerUser.jsp?message="
+						+ message + "");
 			}
-			response.sendRedirect("pages/login.jsp");
+
 		} else if (command.equalsIgnoreCase("login")) {
 			user = new User();
 			user.setUserID(request.getParameter("userId"));
 			user.setPassword(request.getParameter("password"));
 			try {
 				user = userService.login(user);
-				if (user == null) {
-					message = Constants.INVALID_LOGIN_DETAILS;
-					response.sendRedirect("pages/login.jsp?message="+message+"");
-				} else {
-					message = "";
-					response.sendRedirect("pages/post.jsp");
-				}
+				message = "";
+				response.sendRedirect("pages/post.jsp");
 			} catch (Exception exception) {
 				exception.printStackTrace();
+				message = exception.getMessage();
+				response.sendRedirect("pages/login.jsp?message=" + message + "");
 			}
 
 		}

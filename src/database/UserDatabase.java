@@ -50,8 +50,8 @@ public class UserDatabase {
 
 			if (result.next() && user.getPassword().equals(result.getString(2))) {
 				System.out.println(result.getString(2));
-			}else{
-				user = null;
+			} else {
+				throw new Exception(Constants.INVALID_LOGIN_DETAILS);
 			}
 		} catch (Exception exception) {
 			throw exception;

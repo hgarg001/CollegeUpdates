@@ -13,23 +13,26 @@ public class UserValidator {
 	}
 
 	public Boolean isValidBateOfBirth(LocalDate dateOfBirth) {
-		return false;
+		LocalDate date = LocalDate.now();
+		return (dateOfBirth.compareTo(date) < 0) ? true : false;
 	}
 
 	public Boolean isValidEmailId(String emailId) {
-		return false;
+		return emailId.toLowerCase().matches(
+				"[a-z][a-z0-9\\.]{6,38}[a-z]@[a-z]+\\.[a-z]+");
 	}
 
-	public Boolean isValidPhoneNumber(Long phoneNumber) {
-		return (phoneNumber+"").matches("[987][0-9]{9}");
+	public Boolean isValidMobileNumber(Long phoneNumber) {
+		return (phoneNumber + "").matches("[987][0-9]{9}");
 	}
 
 	public Boolean isValidPassword(String password) {
 		return password.matches("\\w");
 	}
-	
+
 	public static void main(String[] args) {
 		UserValidator validator = new UserValidator();
-		System.out.println(validator.isValidPassword("gkj"));
+		System.out.println(validator.isValidBateOfBirth(LocalDate.now()
+				.plusDays(3)));
 	}
 }
